@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 // 连接数据库
 require('./model/connect');
@@ -9,7 +10,10 @@ require('./model/connect');
 // 得到一个服务器对象
 const app = express();
 
+// 解析 POST 数据
 app.use(bodyParser.urlencoded({extended: false}));
+// 登陆配置
+app.use(session({secret: 'keyboard cat'}));
 
 // 开放静态资源
 app.use(express.static(path.join(__dirname, 'public')));

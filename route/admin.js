@@ -11,7 +11,9 @@ admin.get('/login', (req, res) => {
 });
 
 admin.get('/user', (req, res) => {
-    res.render('admin/user', {});
+    res.render('admin/user', {
+        username: req.session.username
+    });
 });
 
 admin.post('/login', async (req, res) => {
@@ -29,7 +31,9 @@ admin.post('/login', async (req, res) => {
         // 至少邮箱存在
         // 如果查询出来的密码和传递过来的密码一致，才允许登录
         if (user.password === hash(password)) { // ifer
-            res.send('登录成功');
+            req.session.username = user.username;
+            // 登陆成功之后跳转到后台管理页面 /admin/user
+            res.redirect('/admin/user'); // 302 => 临时重定向
         } else {
             // 密码错误
             return res.status(400).render('admin/error', {
