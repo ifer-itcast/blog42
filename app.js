@@ -1,7 +1,16 @@
 const express = require('express');
+const path = require('path');
 
 // 得到一个服务器对象
 const app = express();
+
+// 开放静态资源
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 模板文件相关的配置
+app.engine('art', require('express-art-template'));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'art');
 
 // /home 开头的前台相关的
 app.use('/home', require('./route/home'));
