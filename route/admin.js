@@ -1,5 +1,6 @@
 const express = require('express');
 const { User } = require('../model/user');
+const hash = require('../utils/hash');
 
 // 得到一个路由对象
 const admin = express.Router();
@@ -27,7 +28,7 @@ admin.post('/login', async (req, res) => {
     if (user) {
         // 至少邮箱存在
         // 如果查询出来的密码和传递过来的密码一致，才允许登录
-        if (user.password === password) {
+        if (user.password === hash(password)) { // ifer
             res.send('登录成功');
         } else {
             // 密码错误
