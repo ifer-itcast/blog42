@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>文章详情</title>
-	<link rel="stylesheet" href="css/base.css">
-	<link rel="stylesheet" href="css/article.css">
+	<link rel="stylesheet" href="/home/css/base.css">
+	<link rel="stylesheet" href="/home/css/article.css">
 </head>
 <body>
 	<!-- 头部框架开始 -->

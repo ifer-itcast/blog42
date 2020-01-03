@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>首页</title>
-	<link rel="stylesheet" href="css/base.css">
-	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="/home/css/base.css">
+	<link rel="stylesheet" href="/home/css/index.css">
 </head>
 <body>
 	<!-- 头部框架开始 -->
