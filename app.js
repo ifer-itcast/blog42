@@ -1,6 +1,10 @@
 const express = require('express');
 const path = require('path');
 
+// 连接数据库
+require('./model/connect');
+// const { User } = require('./model/user');
+
 // 得到一个服务器对象
 const app = express();
 
