@@ -1,62 +1,19 @@
 const express = require('express');
-const { User } = require('../model/user');
-const hash = require('../utils/hash');
+
 
 // 得到一个路由对象
 const admin = express.Router();
 
-// http://localhost:3000/admin/login
-admin.get('/login', (req, res) => {
-    res.render('admin/login', {});
-});
+// 登录页面
+admin.get('/login', require('./admin/loginPage'));
 
-admin.get('/user', (req, res) => {
-    res.render('admin/user', {
-        username: req.session.username
-    });
-});
+// 用户页面
+admin.get('/user', require('./admin/userPage'));
 
-admin.post('/login', async (req, res) => {
-    const {email, password} = req.body;
-    if(email.trim().length === 0 || password.trim().length === 0) {
-        return res.status(400).render('admin/error', {
-            msg: '邮箱或密码不能为空'
-        });
-    }
+// 登录功能
+admin.post('/login', require('./admin/login-fn'));
 
-    // 通过校验
-    // 先查询这个邮箱是否注册过
-    let user = await User.findOne({email});
-    if (user) {
-        // 至少邮箱存在
-        // 如果查询出来的密码和传递过来的密码一致，才允许登录
-        if (user.password === hash(password)) { // ifer
-            req.session.username = user.username;
-            // 登陆成功之后跳转到后台管理页面 /admin/user
-            res.redirect('/admin/user'); // 302 => 临时重定向
-        } else {
-            // 密码错误
-            return res.status(400).render('admin/error', {
-                msg: '密码错误'
-            });
-        }
-    } else {
-        // 邮箱根本就不存在
-        return res.status(400).render('admin/error', {
-            msg: '邮箱不存在'
-        });
-    }
-});
-
-
-admin.get('/logout', (req, res) => {
-    // 删除后端 session
-    req.session.destroy(function() {
-        // 删除前端的 cookie
-        res.clearCookie('connect.sid');
-        // 跳转到登录页面
-        res.redirect('/admin/login');
-    });
-});
+// 退出功能
+admin.get('/logout', require('./admin/logout-fn'));
 
 module.exports = admin;
