@@ -29,6 +29,16 @@ app.engine('art', require('express-art-template'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'art');
 
+app.use('/admin', (req, res, next) => {
+    // 如果用户访问的不是 /login，并且如果用户的 session 信息不存在
+    if (req.url !== '/login' && !req.session.username) {
+        // 让登录
+        res.redirect('/admin/login');
+    } else {
+        next();
+    }
+});
+
 // /home 开头的前台相关的
 app.use('/home', require('./route/home'));
 // /admin 开头的后台管理相关的
