@@ -1,22 +1,18 @@
 const Joi = require('joi');
-const { User } = require('../../model/user');
+const { User, validator } = require('../../model/user');
 const hash = require('../../utils/hash');
 
-module.exports = async (req, res) => {
-    // 定义规则
-    const schema = {
-        username: Joi.string().min(2).max(12).required().error(new Error('用户名不符合规则')),
-        email: Joi.string().email().error(new Error('邮箱格式不符合要求')),
-        password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required().error(new Error('密码格式不符合要求')),
-        role: Joi.string().valid('normal', 'admin').required().error(new Error('角色非法')),
-        state: Joi.number().valid(0, 1).required().error(new Error('状态值非法'))
-    };
-
+module.exports = async (req, res, next) => {
     try {
-        await Joi.validate(req.body, schema);
+        await validator(req.body);
     } catch (err) {
         // err.message
-        return res.redirect(`/admin/user-edit?message=${err.message}`);
+        // return res.redirect(`/admin/user-edit?message=${err.message}`);
+        let obj = {
+            path: '/admin/user-edit',
+            message: err.message
+        };
+        return next(JSON.stringify(obj));
     }
     
     // 说明前面的校验规则都通过了
@@ -24,7 +20,12 @@ module.exports = async (req, res) => {
     let user = await User.findOne({email: req.body.email});
     if (user) {
         // 说明此邮箱已存在，不允许重复添加
-        return res.redirect(`/admin/user-edit?message=此邮箱已存在`);
+        // return res.redirect(`/admin/user-edit?message=此邮箱已存在`);
+        let obj = {
+            path: '/admin/user-edit',
+            message: '此邮箱已存在'
+        };
+        return next(JSON.stringify(obj));
     }
 
     // 对传递过来的密码进行加密

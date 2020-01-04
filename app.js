@@ -37,5 +37,11 @@ app.use('/home', require('./route/home'));
 // /admin 开头的后台管理相关的
 app.use('/admin', require('./route/admin'));
 
+// 错误统一处理
+app.use((err, req, res, next) => {
+    let obj = JSON.parse(err);
+    res.redirect(`${obj.path}?message=${obj.message}`);
+});
+
 // 设置端口
 app.listen(3000, () => console.log('Server running on http://localhost:3000'));
