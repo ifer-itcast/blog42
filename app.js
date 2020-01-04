@@ -13,7 +13,13 @@ const app = express();
 // 解析 POST 数据
 app.use(bodyParser.urlencoded({extended: false}));
 // 登陆配置
-app.use(session({secret: 'keyboard cat'}));
+app.use(session({
+    secret: 'keyboard cat',
+    saveUninitialized: false, // 清除未初始化的 SessionID
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000 // 一天后 cookie 过期
+    }
+}));
 
 // 开放静态资源
 app.use(express.static(path.join(__dirname, 'public')));
