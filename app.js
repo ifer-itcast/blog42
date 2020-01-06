@@ -39,8 +39,15 @@ app.use('/admin', require('./route/admin'));
 
 // 错误统一处理
 app.use((err, req, res, next) => {
-    let obj = JSON.parse(err);
-    res.redirect(`${obj.path}?message=${obj.message}`);
+    let obj = JSON.parse(err); // {id: xxx, path: 'admin', message: xxx}
+    let arr = [];
+    for (let attr in obj) {
+        if (attr != 'path') {
+            arr.push(`${attr}=${obj[attr]}`);
+        }
+    }
+    // arr => ["id=666", "message=错误"]
+    res.redirect(`${obj.path}?${arr.join('&')}`);
 });
 
 // 设置端口
