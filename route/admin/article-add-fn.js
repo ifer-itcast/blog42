@@ -8,6 +8,7 @@ module.exports = (req, res) => {
     form.uploadDir = path.join(__dirname, '../', '../', 'public', 'uploads');
     // 3. 保留文件的后缀
     form.keepExtensions = true;
+    // 4. 解析表单
     form.parse(req, function(err, fields, files) {
         // fields => 普通数据
         // files  => 文件相关的数据
