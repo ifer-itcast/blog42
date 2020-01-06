@@ -28,4 +28,10 @@ admin.post('/user-modify', require('./admin/user-modify-fn'));
 // 删除用户
 admin.get('/delete', require('./admin/user-delete-fn'));
 
+// 文章页面
+admin.get('/article', require('./admin/article'));
+
+// 发布新文章
+admin.get('/article-edit', require('./admin/article-edit'));
+
 module.exports = admin;

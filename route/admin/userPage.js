@@ -1,6 +1,9 @@
 const { User } = require('../../model/user');
 
 module.exports = async (req, res) => {
+    // 添加 user 标识，证明是用户相关的页面
+    req.app.locals.currentLink = 'user';
+
     // 获取当前页，如果没有传递 page 默认就是第一页
     let page = req.query.page || 1;
     // 规定每一页显示多少条
