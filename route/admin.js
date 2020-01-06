@@ -34,4 +34,7 @@ admin.get('/article', require('./admin/article'));
 // 发布新文章
 admin.get('/article-edit', require('./admin/article-edit'));
 
+// 文章数据的处理
+admin.post('/article-add', require('./admin/article-add-fn'));
+
 module.exports = admin;
