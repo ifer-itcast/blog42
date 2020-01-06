@@ -22,4 +22,7 @@ admin.get('/user-edit', require('./admin/user-edit'));
 // 新增用户功能
 admin.post('/user-edit', require('./admin/user-edit-fn'));
 
+// 修改用户信息功能
+admin.post('/user-modify', require('./admin/user-modify-fn'));
+
 module.exports = admin;

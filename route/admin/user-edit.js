@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
         res.render('admin/user-edit', {
             message,
             user,
-            link: '/admin/user-modify',
+            link: '/admin/user-modify?id='+id,
             buttonText: '修改'
         });
     } else {
