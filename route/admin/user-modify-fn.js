@@ -10,13 +10,26 @@ module.exports = async (req, res, next) => {
     let user = await User.findOne({_id: id});
 
     if(hash(password) === user.password) {
-        // 允许修改
-        await User.updateOne({_id: id}, {
-            username,
-            email,
-            role,
-            state
-        });
+        try {
+            // 允许修改
+            await User.updateOne({_id: id}, {
+                username,
+                email,
+                role,
+                state
+            });
+        } catch (err) {
+            // 错误信息中包含 dup key 说明邮箱重复
+            if (err.errmsg.includes('dup key')) {
+                let obj = {
+                    path: '/admin/user-edit',
+                    message: '邮箱不能重复',
+                    id
+                };
+                return next(JSON.stringify(obj));
+            }
+        }
+        
         // 修改成功后跳转到用户列表
         res.redirect('/admin/user');
     } else {
