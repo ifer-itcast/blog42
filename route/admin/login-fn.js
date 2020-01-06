@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
         // 如果查询出来的密码和传递过来的密码一致，才允许登录
         if (user.password === hash(password)) { // ifer
             req.session.username = user.username;
+            req.session.uid = user._id;
             // 登陆成功之后跳转到后台管理页面 /admin/user
             res.redirect('/admin/user'); // 302 => 临时重定向
         } else {

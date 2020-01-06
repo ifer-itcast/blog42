@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <label>作者</label>
-                    <input name="author" type="text" class="form-control" readonly>
+                    <input value="{{uid}}" name="author" type="text" class="form-control" readonly>
                 </div>
                 <div class="form-group">
                     <label>发布时间</label>
@@ -31,9 +31,9 @@
                 
                 <div class="form-group">
                    <label for="exampleInputFile">文章封面</label>
-                   <input name="cover" type="file">
+                   <input name="cover" type="file" id="file">
                    <div class="thumbnail-waper">
-                       <img class="img-thumbnail" src="">
+                       <img class="img-thumbnail" src="" id="preview">
                    </div>
                 </div>
                 <div class="form-group">
@@ -66,5 +66,23 @@
 
         // 获取数据
         // const editorData = editor.getData();
+        const oFile = document.querySelector('#file');
+        const oPreview = document.querySelector('#preview');
+        // 监听文件的 onchange 事件，选择不同的文件时会触发
+        oFile.onchange = function () {
+            if (/^image/.test(this.files[0].type)) {
+                // 是图片
+                // 1. 创建文件读取对象
+                const reader = new FileReader();
+                // 2. 读取文件为 base64 编码的格式数据
+                reader.readAsDataURL(this.files[0]);
+                // 3. 获取读取结果
+                reader.onload = function() {
+                    oPreview.src = this.result;
+                };
+            } else {
+                alert('重新选择');
+            }
+        };
     </script>
 {{/block}}
