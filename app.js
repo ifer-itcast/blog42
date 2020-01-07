@@ -2,6 +2,10 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const dateFormat = require('dateformat');
+const template = require('art-template');
+
+template.defaults.imports.dateFormat = dateFormat;
 
 // 连接数据库
 require('./model/connect');
