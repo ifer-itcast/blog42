@@ -26,6 +26,7 @@ app.use(session({
     }
 }));
 
+// 区分不同的环境做不同的事情
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 } else {
