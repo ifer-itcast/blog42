@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const dateFormat = require('dateformat');
 const template = require('art-template');
+const morgan = require('morgan');
 
 template.defaults.imports.dateFormat = dateFormat;
 
@@ -24,6 +25,12 @@ app.use(session({
         maxAge: 24 * 60 * 60 * 1000 // 一天后 cookie 过期
     }
 }));
+
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+} else {
+    console.log('生产环境');
+}
 
 // 开放静态资源
 app.use(express.static(path.join(__dirname, 'public')));
