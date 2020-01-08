@@ -18,7 +18,7 @@
 					<span>{{dateFormat($value.publishDate, 'yyyy-mm-dd')}}</span>
 				</div>
 				<div class="brief">
-					{{$value.content}}
+					{{@$value.content.replace(/<.+?>/g, '').substring(0, 70) + '...'}}
 				</div>
 			</div>
 		</li>
@@ -28,13 +28,15 @@
 
 	<!-- 分页开始 -->
 	<div class="page w1100">
-		<a href="#">上一页</a>
-		<a href="#" class="active">1</a>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
-		<a href="#">下一页</a>
+		{{if articles.page > 1}}
+		<a href="/home/?page={{articles.page - 1}}">上一页</a>
+		{{/if}}
+		{{each articles.display}}
+		<a class="{{articles.page == $value ? 'active' : ''}}" href="/home/?page={{$value}}" class="active">{{$value}}</a>
+		{{/each}}
+		{{if articles.page < articles.pages}}
+		<a href="/home/?page={{articles.page + 1}}">下一页</a>
+		{{/if}}
 	</div>
 	<!-- 分页结束 -->
 {{/block}}
