@@ -21,14 +21,15 @@
 					{{@article.content}}
 				</div>
 				<div class="article-comment">
+					{{if username}}
 					<h4>评论</h4>
-					
 					<form class="comment-form">
 						<textarea class="comment"></textarea>
 						<div class="items">
 							<input type="submit" value="提交">
 						</div>
 					</form>
+					{{/if}}
 					<div class="comment-list">
 						<div class="mb10">
 							<div class="article-info">
