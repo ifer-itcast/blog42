@@ -1,4 +1,5 @@
 const { Article } = require('../../model/article');
+const Comment = require('../../model/comment');
 
 module.exports = async (req, res, next) => {
     /* if (req.query.id) {
@@ -12,8 +13,10 @@ module.exports = async (req, res, next) => {
         }))
     } */
     let article;
+    let comments;
     try {
         article = await Article.findOne({_id: req.query.id}).populate('author');
+        comments = await Comment.find({aid: req.query.id}).populate('uid');
         if(!article) {
             throw new Error('错误');
         }
@@ -25,6 +28,7 @@ module.exports = async (req, res, next) => {
     res.render('home/article', {
         article,
         username: req.session.username,
-        uid: req.session.uid
+        uid: req.session.uid,
+        comments
     });
 };
