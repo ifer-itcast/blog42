@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文章详情</title>
+	<link rel="stylesheet" href="/home/css/base.css">
+	{{block 'link'}}{{/block}}
+</head>
+<body>
+	<!-- 头部框架开始 -->
+	{{include './header.art'}}
+	<!-- 头部框架结束 -->
+	<!-- 文章框架开始 -->
+	{{block 'content'}}{{/block}}
+	<!-- 文章框架结束 -->
+</body>
+</html>

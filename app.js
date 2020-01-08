@@ -51,6 +51,7 @@ app.use('/admin', require('./route/admin'));
 
 // 错误统一处理
 app.use((err, req, res, next) => {
+    console.log(err, 23333)
     let obj = JSON.parse(err); // {id: xxx, path: 'admin', message: xxx}
     let arr = [];
     for (let attr in obj) {
