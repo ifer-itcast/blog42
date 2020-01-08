@@ -4,6 +4,10 @@ module.exports = (req, res, next) => {
         // 让重新登录
         res.redirect('/admin/login');
     } else {
+        // 再次根据角色进行处理
+        if (req.session.role === 'normal') {
+            return res.redirect('/home')
+        }
         next();
     }
 };

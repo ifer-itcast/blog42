@@ -18,8 +18,13 @@ module.exports = async (req, res) => {
         if (user.password === hash(password)) { // ifer
             req.session.username = user.username;
             req.session.uid = user._id;
+            req.session.role = user.role;
             // 登陆成功之后跳转到后台管理页面 /admin/user
-            res.redirect('/admin/user'); // 302 => 临时重定向
+            if (user.role === 'admin') {
+                res.redirect('/admin/user'); // 302 => 临时重定向
+            } else {
+                res.redirect('/home'); // 302 => 临时重定向
+            }
         } else {
             // 密码错误
             return res.status(400).render('admin/error', {
