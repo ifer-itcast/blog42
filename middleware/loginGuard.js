@@ -5,7 +5,9 @@ module.exports = (req, res, next) => {
         res.redirect('/admin/login');
     } else {
         // 再次根据角色进行处理
-        if (req.session.role === 'normal') {
+        // 只有这些路由地址需要调整到首页，其他的都不需要管，例如 /login、/logout
+        let notEntry = ['/user', '/user-edit', '/article', '/article-edit'];
+        if (req.session.role === 'normal' && notEntry.includes(req.url)) {
             return res.redirect('/home')
         }
         next();

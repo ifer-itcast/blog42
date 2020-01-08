@@ -1,10 +1,10 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const dateFormat = require('dateformat');
 const template = require('art-template');
 const morgan = require('morgan');
+const favicon = require('serve-favicon')
 
 template.defaults.imports.dateFormat = dateFormat;
 
@@ -17,14 +17,10 @@ const app = express();
 
 // 解析 POST 数据
 app.use(bodyParser.urlencoded({extended: false}));
-// 登陆配置
-app.use(session({
-    secret: 'keyboard cat',
-    saveUninitialized: false, // 清除未初始化的 SessionID
-    cookie: {
-        maxAge: 24 * 60 * 60 * 1000 // 一天后 cookie 过期
-    }
-}));
+// Session 相关配置
+app.use(require('./middleware/session')());
+// 配置 favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 // 区分不同的环境做不同的事情
 if (process.env.NODE_ENV === 'development') {
