@@ -8,4 +8,6 @@ home.get('/', require('./home/index'));
 // 详情页
 home.get('/article', require('./home/article'));
 
+home.post('/comment', require('./home/comment'));
+
 module.exports = home;

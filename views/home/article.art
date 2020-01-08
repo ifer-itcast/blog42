@@ -23,8 +23,10 @@
 				<div class="article-comment">
 					{{if username}}
 					<h4>评论</h4>
-					<form class="comment-form">
-						<textarea class="comment"></textarea>
+					<form class="comment-form" action="/home/comment" method="POST">
+						<textarea class="comment" name="content"></textarea>
+						<input type="hidden" value="{{@article._id}}" name="aid">
+						<input type="hidden" value="{{@uid}}" name="uid">
 						<div class="items">
 							<input type="submit" value="提交">
 						</div>

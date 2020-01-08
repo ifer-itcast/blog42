@@ -24,6 +24,7 @@ module.exports = async (req, res, next) => {
     }
     res.render('home/article', {
         article,
-        username: req.session.username
+        username: req.session.username,
+        uid: req.session.uid
     });
 };
